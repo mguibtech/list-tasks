@@ -1,26 +1,28 @@
 import { ButtonFomr, Container, InputFomr, IconAdd } from "./styles";
 import { useState } from "react";
 
-export function Form() {
+interface Props {
+  addNewTask: () => void;
+}
+
+export function Form({addNewTask }: Props) {
   const [isFocused, setIsFocused] = useState<boolean>(false)
+  const [task, setTask] = useState('');
 
-  function handleFocus(){
-    setIsFocused(true)
-  }
-
-  function handleBlur (){
-    setIsFocused(false)
-  }
+//   function handleNewTaskChange(event:ChangeEvent<HTMLInputElement>){
+//     setTask(event.target.value)
+// }
 
   return (
     <Container>
       <InputFomr
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         placeholder="Add a new task"
         borderColor={isFocused}
+        // onChange={() => setIsFocused(true)}
+        onChangeText={text => setTask(text)}
+        onFocus={() => setIsFocused(true)}
       />
-      <ButtonFomr>
+      <ButtonFomr onPress={addNewTask}>
         <IconAdd />
       </ButtonFomr>
     </Container>
