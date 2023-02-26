@@ -21,36 +21,47 @@ export function Home() {
   const [newTask, setNewTask] = useState<string[]>([]);
   const [taskName, setTaskName] = useState('')
   const [isFocused, setIsFocused] = useState<boolean>(false)
-  const [marked, setMarked] = useState<boolean>(false)
+  const [countDone, setCountDone] = useState(0);
+  const [marked, setMarked] = useState(false);
 
   function handleAddNewTask() {
     if (newTask.includes(taskName)) {
       return Alert.alert("Task ja existe", "Ja existe uma task com essa descricao!")
-    }else if(taskName === ''){
-      return Alert.alert("Atenção", "Você precisa preencher a descrição da tarefa!")
-    }
 
-    setNewTask(oldState => [...oldState, taskName])
-    setTaskName('')
+    }else if(taskName === ''){
+      return Alert.alert("Task vazia", "Prencha o campo de task!")
+    }else{
+      setNewTask(oldState => [...oldState, taskName])
+      setTaskName('')
+    }   
 
   }
 
-  function handleMarke(name: string){
+  function handleMarketRead(name: string) {
     setMarked(!marked)
+    // setCountDone(countDone + 1)
+    if(marked){
+      setCountDone(countDone - 1);
+    }else{
+      setCountDone(countDone + 1);
+    }
   }
 
   function handleRemoveTask(name: string) {
     Alert.alert("Remover", `Deseja remover a task ${name}?`, [
       {
         text: 'Sim',
-        onPress: () => setNewTask(oldState => oldState.filter(task => task !== name))
+        onPress: () => {setNewTask(oldState => oldState.filter(task => task !== name)),
+        setCountDone(countDone - 1)}
       },
       {
         text: 'Não',
         style: "cancel"
       }
     ])
+
   }
+
 
   return (
     <Container>
@@ -61,6 +72,9 @@ export function Home() {
           borderColor={isFocused}
           onChangeText={setTaskName}
           value={taskName}
+        // onChange={() => setIsFocused(true)}
+        // onChangeText={text => setTask(text)}
+        // onFocus={() => setIsFocused(true)}
         />
         <ButtonFomr onPress={handleAddNewTask}>
           <IconAdd />
@@ -75,7 +89,7 @@ export function Home() {
 
         <TaskCountView>
           <TaskCountText>Concluídas</TaskCountText>
-          <CountTask>0</CountTask>
+          <CountTask>{countDone}</CountTask>
         </TaskCountView>
       </TaskCount>
 
@@ -85,9 +99,9 @@ export function Home() {
         keyExtractor={item => item}
         renderItem={({ item }) => (
           <ItemTask
-            marke={() => handleMarke(item)}
+            mark={marked}
             title={item}
-            // markede={marked}
+            marketRead={() => handleMarketRead(item)}
             onRemove={() => handleRemoveTask(item)}
           />
         )}
