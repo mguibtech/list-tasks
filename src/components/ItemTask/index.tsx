@@ -5,12 +5,12 @@ import { useState } from "react";
 import { Check } from "phosphor-react-native";
 
 type ListItemProps = {
-  marketRead: (id: number) => void;
   onRemove: () => void;
   title: string;
+  marke:() => void;
 }
 
-export function ItemTask({marketRead, title, onRemove} : ListItemProps) {
+export function ItemTask({title, onRemove} : ListItemProps) {
 
   const [marked, setMarked] = useState(false);
 
@@ -20,7 +20,7 @@ export function ItemTask({marketRead, title, onRemove} : ListItemProps) {
 
   return (
     <Container>
-      <CheckItem marked={marked}>
+      <CheckItem marked={marked} onPress={handleMark}>
         {
           marked && <Check size={12} color="#fff"/>
         }        
