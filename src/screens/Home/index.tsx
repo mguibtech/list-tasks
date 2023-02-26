@@ -21,11 +21,13 @@ export function Home() {
   const [newTask, setNewTask] = useState<string[]>([]);
   const [taskName, setTaskName] = useState('')
   const [isFocused, setIsFocused] = useState<boolean>(false)
+  const [marked, setMarked] = useState<boolean>(false)
 
   function handleAddNewTask() {
     if (newTask.includes(taskName)) {
       return Alert.alert("Task ja existe", "Ja existe uma task com essa descricao!")
-
+    }else if(taskName === ''){
+      return Alert.alert("Atenção", "Você precisa preencher a descrição da tarefa!")
     }
 
     setNewTask(oldState => [...oldState, taskName])
@@ -33,8 +35,8 @@ export function Home() {
 
   }
 
-  function handleMarketRead(task: string) {
-
+  function handleMarke(name: string){
+    setMarked(!marked)
   }
 
   function handleRemoveTask(name: string) {
@@ -48,9 +50,7 @@ export function Home() {
         style: "cancel"
       }
     ])
-
   }
-
 
   return (
     <Container>
@@ -61,9 +61,6 @@ export function Home() {
           borderColor={isFocused}
           onChangeText={setTaskName}
           value={taskName}
-        // onChange={() => setIsFocused(true)}
-        // onChangeText={text => setTask(text)}
-        // onFocus={() => setIsFocused(true)}
         />
         <ButtonFomr onPress={handleAddNewTask}>
           <IconAdd />
@@ -73,7 +70,7 @@ export function Home() {
       <TaskCount>
         <TaskCountView>
           <TaskCountText primary>Criadas</TaskCountText>
-          <CountTask>0</CountTask>
+          <CountTask>{newTask.length}</CountTask>
         </TaskCountView>
 
         <TaskCountView>
@@ -88,8 +85,9 @@ export function Home() {
         keyExtractor={item => item}
         renderItem={({ item }) => (
           <ItemTask
+            marke={() => handleMarke(item)}
             title={item}
-            marketRead={() => handleMarketRead(item)}
+            // markede={marked}
             onRemove={() => handleRemoveTask(item)}
           />
         )}
