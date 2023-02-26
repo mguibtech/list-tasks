@@ -4,8 +4,13 @@ import theme from "../../theme";
 import { useState } from "react";
 import { Check } from "phosphor-react-native";
 
+type ListItemProps = {
+  marketRead: (id: number) => void;
+  onRemove: () => void;
+  title: string;
+}
 
-export function ItemTask() {
+export function ItemTask({marketRead, title, onRemove} : ListItemProps) {
 
   const [marked, setMarked] = useState(false);
 
@@ -15,13 +20,13 @@ export function ItemTask() {
 
   return (
     <Container>
-      <CheckItem marked={marked} onPress={handleMark}>
+      <CheckItem marked={marked}>
         {
           marked && <Check size={12} color="#fff"/>
         }        
       </CheckItem>
-      <TitleTask marked={marked}>Integer urna interdum massa libero auctor neque turpis turpis semper.</TitleTask>
-      <ButtonTrash>
+      <TitleTask marked={marked}>{title}</TitleTask>
+      <ButtonTrash onPress={onRemove}>
         <TrashIcon />
       </ButtonTrash>
 

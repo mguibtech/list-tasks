@@ -9,16 +9,14 @@ interface PropsText{
 
 export const Container = styled.View`
   box-sizing: border-box;
-  display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   gap: 8px;
   padding: 12px 8px 12px 12px;
-  
-  
+  margin-right: 80px;
   width: 100%;
-  height: 64px;
+  /* height: 64px; */
 
   background-color: ${({ theme }) => theme.COLORS.GRAY_400};
   border-radius: 8px;
@@ -26,7 +24,7 @@ export const Container = styled.View`
   border: 1px solid ${({ theme }) => theme.COLORS.GRAY_400};
   margin-bottom: 8px;
 
-  flex: none;
+  /* flex: none; */
   order: 1px;
   align-self: stretch;
   flex-grow: 0;
@@ -56,6 +54,7 @@ export const TitleTask = styled.Text.attrs<PropsText>(({theme}) => ({
   color: ${(p:PropsText) => p.marked ? theme.COLORS.GRAY_300 :theme.COLORS.GRAY_100 };
   text-decoration: ${(p:PropsText) => p.marked ? 'line-through' :''};
   font-weight: 400;
+  text-align: left;
   font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
   font-size: ${({ theme }) => theme.FONT_SIZE.MD}px; 
 `;
